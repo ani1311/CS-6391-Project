@@ -7,6 +7,18 @@ class Points {
         }
     }
 
+    addPoint(x, y) {
+        this.points.push(new Point(x, y));
+    }
+
+    popPoint() {
+        this.points.pop();
+    }
+
+    deleteAll() {
+        this.points = [];
+    }
+
     draw() {
         for (var i = 0; i < this.points.length; i++) {
             this.points[i].draw();
@@ -15,6 +27,13 @@ class Points {
 
     drawLine() {
         drawLine(this.points);
+    }
+
+    drawPolygon() {
+        drawLine(this.points);
+        if (this.points.length > 0) {
+            line(this.points[0].x, this.points[0].y, this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);
+        }
     }
 
     sortByX() {
