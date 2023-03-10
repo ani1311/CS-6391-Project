@@ -20,7 +20,7 @@ function updateGlobals() {
 }
 
 
-class Tree {
+class KDTree {
     constructor(val) {
         this.left = null;
         this.right = null;
@@ -39,23 +39,46 @@ class Tree {
         if (this.parent != null) {
             this.parent.distFromRoot + 1;
         }
-        if (val < this.val) {
-            if (this.left == null) {
-                this.left = new Tree(val);
-                this.left.parent = this;
-                this.left.distFromRoot = this.distFromRoot + 1;
-                this.left.levelIndex = this.levelIndex * 2;
+
+        if (this.distFromRoot % 2 == 0) {
+            if (val.x < this.val.x) {
+                if (this.left == null) {
+                    this.left = new KDTree(val);
+                    this.left.parent = this;
+                    this.left.distFromRoot = this.distFromRoot + 1;
+                    this.left.levelIndex = this.levelIndex * 2;
+                } else {
+                    this.left.insert(val);
+                }
             } else {
-                this.left.insert(val);
+                if (this.right == null) {
+                    this.right = new KDTree(val);
+                    this.right.parent = this;
+                    this.right.distFromRoot = this.distFromRoot + 1;
+                    this.right.levelIndex = this.levelIndex * 2 + 1;
+                } else {
+                    this.right.insert(val);
+                }
             }
         } else {
-            if (this.right == null) {
-                this.right = new Tree(val);
-                this.right.parent = this;
-                this.right.distFromRoot = this.distFromRoot + 1;
-                this.right.levelIndex = this.levelIndex * 2 + 1;
+            if (val.y < this.val.y) {
+                if (this.left == null) {
+                    this.left = new KDTree(val);
+                    this.left.parent = this;
+                    this.left.distFromRoot = this.distFromRoot + 1;
+                    this.left.levelIndex = this.levelIndex * 2;
+                } else {
+                    this.left.insert(val);
+                }
             } else {
-                this.right.insert(val);
+                if (this.right == null) {
+                    this.right = new KDTree(val);
+                    this.right.parent = this;
+                    this.right.distFromRoot = this.distFromRoot + 1;
+                    this.right.levelIndex = this.levelIndex * 2 + 1;
+                } else {
+                    this.right.insert(val);
+                }
             }
         }
 
@@ -130,5 +153,35 @@ class Tree {
         noStroke();
         fill(255, 255, 255);
         ellipse(x, y, 10, 10);
+    }
+
+    drawSeperators(w_min, w_max, h_min, h_max) {
+        push();
+        if (this.val == null) {
+            return;
+        }
+        if (this.distFromRoot % 2 == 0) {
+            stroke(0, 255, 0);
+            strokeWeight(5);
+            line(this.val.x, h_min, this.val.x, h_max);
+            if (this.left != null) {
+                this.left.drawSeperators(w_min, this.val.x, h_min, h_max);
+            }
+            if (this.right != null) {
+                this.right.drawSeperators(this.val.x, w_max, h_min, h_max);
+            }
+        } else {
+            stroke(0, 0, 255);
+            strokeWeight(5);
+            line(w_min, this.val.y, w_max, this.val.y)
+            if (this.left != null) {
+                this.left.drawSeperators(w_min, w_max, h_min, this.val.y);
+            }
+            if (this.right != null) {
+                this.right.drawSeperators(w_min, w_max, this.val.y, h_max);
+            }
+        }
+
+        pop();
     }
 }
