@@ -1,6 +1,5 @@
 
 
-var kdTree;
 
 function KdSetup() {
     background(0, 0, 0);
@@ -16,6 +15,7 @@ function KdSetup() {
 function KdDraw() {
     background(0, 0, 0);
     kdTree.draw();
+    kdTree.drawPathToPoint(vis_point_x, vis_point_y, col = [0, 255, 0]);
 }
 
 

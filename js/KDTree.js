@@ -184,4 +184,42 @@ class KDTree {
 
         pop();
     }
+
+    drawPathToPoint(x, y, col) {
+        push();
+        if (this.val == null) {
+            return;
+        }
+        var thisX = this.getX();
+        var thisY = this.getY();
+        stroke(col);
+        strokeWeight(2);
+        if (this.distFromRoot % 2 == 0) {
+            if (x < this.val.x) {
+                if (this.left != null) {
+
+                    line(thisX, thisY, this.left.getX(), this.left.getY());
+                    this.left.drawPathToPoint(x, y, col);
+                }
+            } else {
+                if (this.right != null) {
+                    line(thisX, thisY, this.right.getX(), this.right.getY());
+                    this.right.drawPathToPoint(x, y, col);
+                }
+            }
+        } else {
+            if (y < this.val.y) {
+                if (this.left != null) {
+                    line(thisX, thisY, this.left.getX(), this.left.getY());
+                    this.left.drawPathToPoint(x, y, col);
+                }
+            } else {
+                if (this.right != null) {
+                    line(thisX, thisY, this.right.getX(), this.right.getY());
+                    this.right.drawPathToPoint(x, y, col);
+                }
+            }
+        }
+        pop();
+    }
 }
