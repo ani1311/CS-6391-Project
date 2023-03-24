@@ -1,5 +1,5 @@
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 750;
+const CANVAS_HEIGHT = 750;
 const sketch_holder = 'sketch-holder';
 
 var points = [];

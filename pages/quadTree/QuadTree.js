@@ -2,6 +2,9 @@
 var root;
 
 var points;
+var drawers = [];
+var nextDrawers = [];
+var drawing = false;
 
 function createQuadTree() {
     root = new QuadTree(
@@ -18,16 +21,24 @@ function createQuadTree() {
     root.NE.createNEIfNull([])
 }
 
+function startDraw() {
+    background(0, 0, 0);
+    createQuadTree();
+    drawing = true;
+    drawers = [root];
+    nextDrawers = []
+}
+
 function QuadTreeSetup() {
     background(0, 0, 0);
-    points = randomPoints(10, 0, CANVAS_WIDTH, 0, CANVAS_HEIGHT, rad = 2);
+    points = randomPoints(1000, 0, CANVAS_WIDTH, 0, CANVAS_HEIGHT, rad = 2);
 
     createQuadTree();
 }
 
 function QuadTreeDraw() {
-    background(0, 0, 0);
-    root.draw();
+    // background(0, 0, 0);
+    stroke(255, 255, 255);
     drawPoints(points);
 }
 
@@ -48,4 +59,7 @@ window.onresize = function () {
 
 setInterval(function () {
     //code goes here that will be run every 5 seconds.
-}, 100);
+    if (drawing) {
+        doNextEvent();
+    }
+}, 50);

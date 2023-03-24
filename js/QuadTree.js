@@ -21,6 +21,10 @@ class QuadTree {
     }
 
     createChildren() {
+        if (this.points.length < 2) {
+            return;
+        }
+
         let NEPoints = [];
         let NWPoints = [];
         let SEPoints = [];
@@ -42,19 +46,12 @@ class QuadTree {
                 SWPoints.push(this.points[i])
         }
 
-        if (NEPoints.length > 0) {
-            this.createNEIfNull(NEPoints);
-        }
-        if (NWPoints.length > 0) {
-            this.createNWIfNull(NWPoints);
-        }
-        if (SEPoints.length > 0) {
-            this.createSEIfNull(SEPoints);
-        }
-        if (SWPoints.length > 0) {
-            this.createSWIfNull(SWPoints);
-        }
+        this.createNEIfNull(NEPoints);
+        this.createNWIfNull(NWPoints);
+        this.createSEIfNull(SEPoints);
+        this.createSWIfNull(SWPoints);
     }
+
 
     createNEIfNull(points) {
         if (this.NE == null) {
@@ -126,13 +123,7 @@ class QuadTree {
     }
 
     draw() {
-        stroke(255);
-        strokeWeight(2);
-        line(this.tl.x, this.tl.y, this.br.x, this.tl.y);
-        line(this.tl.x, this.tl.y, this.tl.x, this.br.y);
-        line(this.br.x, this.tl.y, this.br.x, this.br.y);
-        line(this.tl.x, this.br.y, this.br.x, this.br.y);
-
+        this.drawOnlyThis();
         if (this.NE != null) {
             this.NE.draw();
         }
@@ -145,5 +136,14 @@ class QuadTree {
         if (this.SW != null) {
             this.SW.draw();
         }
+    }
+
+    drawOnlyThis() {
+        stroke(255);
+        strokeWeight(0.2);
+        line(this.tl.x, this.tl.y, this.br.x, this.tl.y);
+        line(this.tl.x, this.tl.y, this.tl.x, this.br.y);
+        line(this.br.x, this.tl.y, this.br.x, this.br.y);
+        line(this.tl.x, this.br.y, this.br.x, this.br.y);
     }
 }
