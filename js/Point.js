@@ -20,12 +20,12 @@ function orient(p1, p2, p3) {
     return (val > 0) ? 1 : 2; // clock or counterclock wise
 }
 
-function randomPoints(n, w_min = 0, w_max = width, h_min = 0, h_max = height) {
+function randomPoints(n, w_min = 0, w_max = width, h_min = 0, h_max = height, rad = 20) {
     var points = [];
     for (var i = 0; i < n; i++) {
         var x = random(w_min, w_max);
         var y = random(h_min, h_max);
-        points.push(new Point(x, y, 20));
+        points.push(new Point(x, y, rad));
     }
     return points;
 }

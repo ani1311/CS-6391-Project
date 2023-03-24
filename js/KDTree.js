@@ -3,7 +3,7 @@ var startX = 100;
 var startY = 100;
 var endX = 700;
 var endY = 0;
-var nodeSize = 10;
+var nodeSize = 15;
 var root;
 var maxDistanceFromRoot = 0;
 
@@ -152,7 +152,11 @@ class KDTree {
         }
         noStroke();
         fill(255, 255, 255);
-        ellipse(x, y, 10, 10);
+        if (this.distFromRoot % 2 == 0) {
+            ellipse(x, y, nodeSize, nodeSize);
+        } else {
+            rect(x, y, nodeSize, nodeSize);
+        }
     }
 
     drawSeperators(w_min, w_max, h_min, h_max) {
