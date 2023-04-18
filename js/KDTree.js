@@ -117,7 +117,10 @@ class KDTree {
     }
 
 
-    draw() {
+    draw(d) {
+        if ((pow(2, this.distFromRoot) - 1 + this.levelIndex >= d)) {
+            return;
+        }
         if (this.val == null) {
             return;
         }
@@ -130,7 +133,7 @@ class KDTree {
             var leftX = this.left.getX();
             var leftY = this.left.getY();
             line(x, y, leftX, leftY);
-            this.left.draw();
+            this.left.draw(d);
         }
         if (this.right != null) {
             var rightX = this.right.getX();
@@ -138,7 +141,7 @@ class KDTree {
             strokeWeight(2);
             stroke(255, 255, 255);
             line(x, y, rightX, rightY);
-            this.right.draw();
+            this.right.draw(d);
         }
         noStroke();
         fill(255, 255, 255);
@@ -149,7 +152,13 @@ class KDTree {
         }
     }
 
-    drawSeperators(w_min, w_max, h_min, h_max) {
+
+
+    drawSeperators(w_min, w_max, h_min, h_max, d) {
+        if ((pow(2, this.distFromRoot) - 1 + this.levelIndex >= d)) {
+            return;
+        }
+
         push();
         if (this.val == null) {
             return;
@@ -159,20 +168,20 @@ class KDTree {
             strokeWeight(5);
             line(this.val.x, h_min, this.val.x, h_max);
             if (this.left != null) {
-                this.left.drawSeperators(w_min, this.val.x, h_min, h_max);
+                this.left.drawSeperators(w_min, this.val.x, h_min, h_max, d);
             }
             if (this.right != null) {
-                this.right.drawSeperators(this.val.x, w_max, h_min, h_max);
+                this.right.drawSeperators(this.val.x, w_max, h_min, h_max, d);
             }
         } else {
             stroke(0, 0, 255);
             strokeWeight(5);
             line(w_min, this.val.y, w_max, this.val.y)
             if (this.left != null) {
-                this.left.drawSeperators(w_min, w_max, h_min, this.val.y);
+                this.left.drawSeperators(w_min, w_max, h_min, this.val.y, d);
             }
             if (this.right != null) {
-                this.right.drawSeperators(w_min, w_max, this.val.y, h_max);
+                this.right.drawSeperators(w_min, w_max, this.val.y, h_max, d);
             }
         }
 
@@ -217,6 +226,7 @@ class KDTree {
         pop();
     }
 }
+
 
 function generateKDTree(points) {
     var tree = new KDTree();

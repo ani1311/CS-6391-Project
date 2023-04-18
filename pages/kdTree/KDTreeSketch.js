@@ -12,8 +12,10 @@ function KdSetup() {
 
 function KdDraw() {
     background(0, 0, 0);
-    kdTree.draw();
-    kdTree.drawPathToPoint(vis_point_x, vis_point_y, col = [0, 255, 0]);
+    kdTree.draw(drawNo);
+    if (vis_point_x != -1 && vis_point_y != -1) {
+        kdTree.drawPathToPoint(vis_point_x, vis_point_y, col = [0, 255, 0]);
+    }
 }
 
 
