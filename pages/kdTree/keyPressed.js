@@ -9,14 +9,6 @@ function keyPressed() {
     }
 
     if (whatToDraw == 1) {
-        // press i to add point
-        if (keyCode === 73) {
-            var x = mouseX;
-            var y = mouseY;
-            var p = new Point(x, y);
-            points.push(p);
-            kdTree.insert(p);
-        }
         // press v to visualize point search
         if (keyCode === 86) {
             console.log("V pressed");

@@ -6,7 +6,7 @@ function PointsSetup() {
 
 function PointsDraw() {
     background(0, 0, 0);
-    drawPoints(points);
+    // drawPoints(points);
     kdTree.drawSeperators(0, width, 0, height);
 
     // draw vis point

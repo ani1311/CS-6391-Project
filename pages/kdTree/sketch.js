@@ -16,7 +16,7 @@ function setup() {
     document.getElementById(sketch_holder).style.width = str(CANVAS_WIDTH) + 'px';
     document.getElementById(sketch_holder).style.height = str(CANVAS_HEIGHT) + 'px';
 
-    points = randomPoints(0, 100, CANVAS_WIDTH - 100, 100, CANVAS_HEIGHT);
+    points = randomPoints(10, 100, CANVAS_WIDTH - 100, 100, CANVAS_HEIGHT);
 
     KdSetup();
     PointsSetup();

@@ -28,60 +28,50 @@ class KDTree {
         this.val = val;
         this.distFromRoot = 0;
         this.levelIndex = 0;
+        this.divideAxis = 0; // 0 = x, 1 = y
     }
 
-    insert(val) {
-        if (this.val == null) {
-            this.val = val;
+    insert(points, divideAxis) {
+        if (points.length == 0) {
+            return;
+        } else if (points.length == 1) {
+            this.val = points[0];
             return;
         }
 
-        if (this.parent != null) {
-            this.parent.distFromRoot + 1;
-        }
-
-        if (this.distFromRoot % 2 == 0) {
-            if (val.x < this.val.x) {
-                if (this.left == null) {
-                    this.left = new KDTree(val);
-                    this.left.parent = this;
-                    this.left.distFromRoot = this.distFromRoot + 1;
-                    this.left.levelIndex = this.levelIndex * 2;
-                } else {
-                    this.left.insert(val);
-                }
-            } else {
-                if (this.right == null) {
-                    this.right = new KDTree(val);
-                    this.right.parent = this;
-                    this.right.distFromRoot = this.distFromRoot + 1;
-                    this.right.levelIndex = this.levelIndex * 2 + 1;
-                } else {
-                    this.right.insert(val);
-                }
-            }
+        if (divideAxis == 0) {
+            points.sort(function (a, b) {
+                return a.x - b.x;
+            });
         } else {
-            if (val.y < this.val.y) {
-                if (this.left == null) {
-                    this.left = new KDTree(val);
-                    this.left.parent = this;
-                    this.left.distFromRoot = this.distFromRoot + 1;
-                    this.left.levelIndex = this.levelIndex * 2;
-                } else {
-                    this.left.insert(val);
-                }
-            } else {
-                if (this.right == null) {
-                    this.right = new KDTree(val);
-                    this.right.parent = this;
-                    this.right.distFromRoot = this.distFromRoot + 1;
-                    this.right.levelIndex = this.levelIndex * 2 + 1;
-                } else {
-                    this.right.insert(val);
-                }
-            }
+            points.sort(function (a, b) {
+                return a.y - b.y;
+            });
+        }
+        var medianPointIndex = Math.floor(points.length / 2);
+        var pointsOnLeft = points.slice(0, medianPointIndex);
+        var pointsOnRight = points.slice(medianPointIndex + 1, points.length);
+        this.val = points[medianPointIndex];
+        this.divideAxis = divideAxis;
+        if (pointsOnLeft.length > 0) {
+            this.left = new KDTree();
+            this.left.parent = this;
+            this.left.distFromRoot = this.distFromRoot + 1;
+            this.left.levelIndex = this.levelIndex * 2;
+            this.left.insert(pointsOnLeft, 1 - divideAxis);
+        } else {
+            this.left = null;
         }
 
+        if (pointsOnRight.length > 0) {
+            this.right = new KDTree();
+            this.right.parent = this;
+            this.right.distFromRoot = this.distFromRoot + 1;
+            this.right.levelIndex = this.levelIndex * 2 + 1;
+            this.right.insert(pointsOnRight, 1 - divideAxis);
+        } else {
+            this.right = null;
+        }
         updateGlobals();
     }
 
@@ -117,7 +107,7 @@ class KDTree {
     }
 
     print() {
-        console.log(this.val, this.distFromRoot, this.levelIndex, this.getX(), this.getY());
+        // console.log(this.val, this.distFromRoot, this.levelIndex, this.getX(), this.getY());
         if (this.left != null) {
             this.left.print();
         }
@@ -226,4 +216,10 @@ class KDTree {
         }
         pop();
     }
+}
+
+function generateKDTree(points) {
+    var tree = new KDTree();
+
+    return tree;
 }

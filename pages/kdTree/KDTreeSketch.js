@@ -7,9 +7,7 @@ function KdSetup() {
     kdTree = new KDTree(val = null);
     setGlobals(100, 100, CANVAS_WIDTH - 100, CANVAS_HEIGHT - 100, root = kdTree);
 
-    for (var i = 0; i < points.length; i++) {
-        kdTree.insert(points[i]);
-    }
+    kdTree.insert(points, 0);
 }
 
 function KdDraw() {
